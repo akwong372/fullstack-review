@@ -50,10 +50,23 @@ class App extends React.Component {
   }
 
   render () {
+    let reposList = this.state.repos.map((repo)=>
+      <li key={repo.repoID}>
+        <div>Repo: <a href={repo.url} target='_blank'>{repo.repoName}</a></div>
+        <div>User: {repo.userName}</div>
+        <div>Forks: {repo.forksCount}</div>
+        <br/>
+      </li>
+    )
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <br/>
+      <h2>Most Forked Repos</h2>
+      <ol>
+        {reposList}
+      </ol>
     </div>)
   }
 }
