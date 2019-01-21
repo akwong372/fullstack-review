@@ -1,13 +1,8 @@
 const express = require('express');
 const githubHelper = require('../helpers/github.js');
+const database = require('../database/index.js')
 const bodyParser = require('body-parser');
 let app = express();
-
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error'));
-// db.once('open', ()=>{
-//   console.log('connected to db');
-// })
 
 
 app.use(express.static(__dirname + '/../client/dist'));

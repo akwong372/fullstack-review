@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+mongoose.connect('mongodb://localhost/fetcher', { useMongoClient: true });
 
 let repoSchema = mongoose.Schema({
   // TODO: your schema here!
@@ -25,8 +25,8 @@ let save = (newRepo) => {
   });
 
   Repo.findOneAndUpdate({ repoID: newRepo.id}, addNewRepo, {upsert: true}, (data)=>{
-    console.log('data', data);
-  })
+    console.log('repo added');
+  });
 }
 
 module.exports.save = save;

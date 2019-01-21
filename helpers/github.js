@@ -1,4 +1,5 @@
 const request = require('request');
+const database = require('../database/index.js')
 const config = require('../config.js');
 
 let getReposByUsername = (username) => {
@@ -6,8 +7,11 @@ let getReposByUsername = (username) => {
   // user from the github API
   var callback = (error, response, body) => {
     if (!error && response.statusCode == 200) {
-      var info = JSON.parse(body);
-      console.log(info)
+
+      var results = JSON.parse(body)
+      for (var i = 0; i < results.length; i++){
+        database.save(results[i]);
+      }
     }
   }
 
@@ -22,7 +26,6 @@ let getReposByUsername = (username) => {
   };
 
   request(options, callback);
-
 }
 
 module.exports.getReposByUsername = getReposByUsername;
