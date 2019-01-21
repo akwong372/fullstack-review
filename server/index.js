@@ -22,6 +22,13 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+
+  database.findTop()
+  .then((results)=>{
+    var sortedResults = results.slice(0,25).sort((a,b)=>b.forksCount - a.forksCount);
+    res.send(sortedResults)
+  })
+
 });
 
 let port = 1128;

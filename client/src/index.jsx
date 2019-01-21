@@ -21,19 +21,31 @@ class App extends React.Component {
       method:'POST',
       data: {searched: term},
       success:(data)=>{
-        var returnedRepos = []
+        console.log(data)
+      },
+      error: (data)=>{
+        console.log('ajax post error', data)
+      }
+
+    })
+  }
+
+  componentDidMount(){
+    $.ajax({
+      url: 'http://localhost:1128/repos',
+      method: 'GET',
+      success: (data)=>{
+        var returnedRepos = [];
         for (var i = 0; i < data.length; i++){
           returnedRepos.push(data[i]);
         }
         this.setState({
           repos: returnedRepos
         }, ()=>console.log(this.state.repos))
-
       },
       error: (data)=>{
-        console.log('error')
+        console.log('ajax get error', data)
       }
-
     })
   }
 

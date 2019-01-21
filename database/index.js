@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird')
 mongoose.connect('mongodb://localhost/fetcher', { useMongoClient: true });
 
 let repoSchema = mongoose.Schema({
@@ -29,4 +30,15 @@ let save = (newRepo) => {
   });
 }
 
+let findTop = () => {
+  return Repo.find({}, (err, docs)=>{
+    if (err){
+      console.log('error', err);
+    }
+
+    return docs;
+  })
+}
+
 module.exports.save = save;
+module.exports.findTop = findTop;
