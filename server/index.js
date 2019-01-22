@@ -31,9 +31,9 @@ app.get('/repos', function (req, res) {
 
 });
 
-let port = 1128;
+let port = process.env.PORT;
 
-app.listen(port, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log(`listening on port ${port}`);
 });
 
