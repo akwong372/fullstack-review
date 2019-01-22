@@ -25,7 +25,7 @@ app.get('/repos', function (req, res) {
 
   database.findTop()
   .then((results)=>{
-    var sortedResults = results.slice(0,25).sort((a,b)=>b.forksCount - a.forksCount);
+    var sortedResults = results.sort((a,b)=>b.forksCount - a.forksCount).slice(0,25);
     res.send({sortedResults, results})
   })
 

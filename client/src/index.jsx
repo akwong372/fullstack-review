@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
@@ -9,9 +10,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       repos: [],
-      topRepos: []
+      topRepos: [],
+      posted: 'no'
     }
-
+    this.search = _.debounce(this.search, 250, {maxWait: 1000});
   }
 
   search(term) {
@@ -23,12 +25,14 @@ class App extends React.Component {
       data: { searched: term },
       success: (data) => {
         console.log(data)
+        this.setState({
+          posted: data
+        })
       },
       error: (data) => {
         console.log('ajax post error', data)
       }
-
-    })
+    });
   }
 
   componentDidMount() {
@@ -46,13 +50,41 @@ class App extends React.Component {
         }
         this.setState({
           repos: returnedTotalRepos,
-          topRepos: returnedTopRepos
-        }, () => console.log(this.state))
+          topRepos: returnedTopRepos,
+        })
       },
       error: (data) => {
         console.log('ajax get error', data)
       }
     })
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.posted === 'no'){
+      $.ajax({
+        url: 'http://localhost:1128/repos',
+        method: 'GET',
+        success: (data) => {
+          var returnedTotalRepos = [];
+          var returnedTopRepos = [];
+          for (var i = 0; i < data.results.length; i++) {
+            returnedTotalRepos.push(data.results[i]);
+          }
+          for (var i = 0; i < data.sortedResults.length; i++) {
+            returnedTopRepos.push(data.sortedResults[i]);
+          }
+          //console.log(returnedTotalRepos)
+          this.setState({
+            repos: returnedTotalRepos,
+            topRepos: returnedTopRepos,
+            posted: 'no'
+          })
+        },
+        error: (data) => {
+          console.log('ajax get error', data)
+        }
+      })
+    }
   }
 
   render() {
