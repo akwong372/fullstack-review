@@ -1,6 +1,6 @@
 const request = require('request');
 const database = require('../database/index.js')
-const config = require('../config.js');
+// const config = require('../config.js');
 
 let getReposByUsername = (username) => {
   // TODO - Use the request module to request repos for a specific
