@@ -26,14 +26,38 @@ let save = (newRepo) => {
     forksCount: newRepo.forks
   });
 
-  Repo.findOneAndUpdate({ repoID: newRepo.id}, addNewRepo, {new: true, upsert: true}, (data)=>{
-    console.log('repo added');
-  });
+  Repo.findOne({ repoID: newRepo.id }, (err, repo) => {
+    if (err) {
+      console.log('findOne error: ', err)
+    }
+    // console.log('fineOne repo: ', repo)
+    if (repo === null) {
+      Repo.findOneAndUpdate({ repoID: newRepo.id }, addNewRepo, { new: true, upsert: true }, (err, data) => {
+        console.log('repo added', data);
+      });
+    } else {
+      var updated = {
+        repoID: newRepo.id,
+        userName: newRepo.owner.login,
+        repoName: newRepo.name,
+        url: newRepo.html_url,
+        forksCount: newRepo.forks
+      }
+      Repo.findOneAndUpdate({ repoID: newRepo.id }, updated, { new: true, upsert: true }, (err, data) => {
+        if (err){
+          console.log('error: ', err)
+        }
+        console.log('repo added else ', data);
+      });
+    }
+  })
+
+
 }
 
 let findTop = () => {
-  return Repo.find({}, (err, docs)=>{
-    if (err){
+  return Repo.find({}, (err, docs) => {
+    if (err) {
       console.log('error', err);
     }
 
