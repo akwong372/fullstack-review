@@ -4,7 +4,6 @@ const database = require('../database/index.js')
 const bodyParser = require('body-parser');
 let app = express();
 
-
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -20,13 +19,11 @@ app.post('/repos', function (req, res) {
 
 app.get('/repos', function (req, res) {
   // This route should send back the top 25 repos
-
   database.findTop()
   .then((results)=>{
     var sortedResults = results.sort((a,b)=>b.forksCount - a.forksCount).slice(0,25);
     res.send({sortedResults, results})
   })
-
 });
 
 let port = process.env.PORT;
