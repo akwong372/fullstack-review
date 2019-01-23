@@ -26,7 +26,7 @@ let save = (newRepo) => {
     forksCount: newRepo.forks
   });
 
-  Repo.findOneAndUpdate({ repoID: newRepo.id}, addNewRepo, {upsert: true}, (data)=>{
+  Repo.findOneAndUpdate({ repoID: newRepo.id}, addNewRepo, {new: true, upsert: true}, (data)=>{
     console.log('repo added');
   });
 }
