@@ -55,7 +55,7 @@ class App extends React.Component {
       },
       error: (data) => {
         console.log('ajax get error', data)
-      }
+      } 
     })
   }
 
