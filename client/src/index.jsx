@@ -13,7 +13,7 @@ class App extends React.Component {
       topRepos: [],
       posted: 'no'
     }
-    this.search = _.debounce(this.search, 250, {maxWait: 1000});
+    //this.search = _.debounce(this.search, 250, {maxWait: 1000});
   }
 
   search(term) {
