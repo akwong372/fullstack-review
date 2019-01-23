@@ -20,7 +20,7 @@ class App extends React.Component {
     console.log(`${term} was searched`);
     // TODO
     $.ajax({
-      url: 'http://localhost:1128/repos',
+      url: 'https://warm-stream-22952.herokuapp.com/repos',
       method: 'POST',
       data: { searched: term },
       success: (data) => {
@@ -37,7 +37,7 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: 'http://localhost:1128/repos',
+      url: 'https://warm-stream-22952.herokuapp.com/repos',
       method: 'GET',
       success: (data) => {
         var returnedTotalRepos = [];
@@ -62,7 +62,7 @@ class App extends React.Component {
   componentDidUpdate(prevProps, prevState){
     if (this.state.posted === 'no'){
       $.ajax({
-        url: 'http://localhost:1128/repos',
+        url: 'https://warm-stream-22952.herokuapp.com/repos',
         method: 'GET',
         success: (data) => {
           var returnedTotalRepos = [];
